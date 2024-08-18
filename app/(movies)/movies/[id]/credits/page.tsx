@@ -1,16 +1,15 @@
 import { getMovie } from "../../../../../components/movie-info";
 import { API_URL } from "../../../../constants";
 
-export async function getMovieCredits(id:string){
-  await new Promise((resolve) =>{ setTimeout(resolve, 1000) })
-  const response = await fetch(`${API_URL}/${id}/credits`);
-  return response.json();
-}
-
 export default async function MovieCredits({params: {id}}: {params: {id:string}}){
   const movie = await getMovie(id);
-  const movieCredits = await getMovieCredits(id);
-  console.log(movieCredits);
+  const response = await fetch(`${API_URL}/${id}/credits`);
+  const movieCredits: [{
+    id: string
+    name: string
+    profile_path: string
+    original_name: string
+  }] = await response.json();
 
   return(
     <div>
